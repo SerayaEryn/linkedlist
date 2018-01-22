@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/SerayaEryn/linkedlist.svg?branch=master)](https://travis-ci.org/SerayaEryn/linkedlist)
 [![Coverage Status](https://coveralls.io/repos/github/SerayaEryn/linkedlist/badge.svg?branch=master)](https://coveralls.io/github/SerayaEryn/linkedlist?branch=master)
+[![NPM version](https://img.shields.io/npm/v/@serayaeryn/linkedlist.svg?style=flat)](https://www.npmjs.com/package/@serayaeryn/linkedlist)
 
 Doubly linked list implementation.
 
