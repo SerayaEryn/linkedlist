@@ -1,0 +1,29 @@
+{
+  "name": "@serayaeryn/linkedlist",
+  "version": "1.0.0",
+  "description": "a doubly linked list implementation",
+  "main": "index.js",
+  "scripts": {
+    "unit": "tap test/*.test.js",
+    "test": "npm run lint && npm run unit",
+    "lint": "./node_modules/eslint/bin/eslint.js index.js lib/* test/*",
+    "coveralls": "npm run unit --  --cov",
+    "coverage-report": "npm run coveralls && tap --coverage-report=lcov"
+  },
+  "keywords": [
+    "linked",
+    "list",
+    "linked-list",
+    "doubly"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SerayaEryn/linkedlist.git"
+  },
+  "author": "Denis Fäcke",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "tap": "^11.0.1"
+  }
+}
