@@ -1,6 +1,6 @@
 {
   "name": "@serayaeryn/linkedlist",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a doubly linked list implementation",
   "main": "index.js",
   "scripts": {
