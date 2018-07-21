@@ -11,12 +11,14 @@ module.exports = class LinkedList {
   }
 
   [Symbol.iterator]() {
-    let index = -1;
+    let node = new Node(null, null, this.first);
     return {
-      next: () => {
+      next() {
+        node = node.getNext();
+        const done = node === null;
         return {
-          value: this.get(++index),
-          done: index === this.length
+          value: done ? null : node.getElement(),
+          done
         }
       }
     }

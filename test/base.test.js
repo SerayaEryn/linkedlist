@@ -74,6 +74,15 @@ test('should allow to iterate over list', t => {
   }
 })
 
+test('should allow to iterate over empty list', t => {
+  t.plan(0);
+  const linkedList = new LinkedList();
+
+  for (const element of linkedList) {
+    t.ok(element);
+  }
+})
+
 test('should return index of element', t => {
   t.plan(1);
   const linkedList = new LinkedList(['a', 'b', 'b', 'c']);
