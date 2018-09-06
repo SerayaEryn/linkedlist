@@ -1,21 +1,21 @@
-'use strict';
+'use strict'
 
-const Node = require('./lib/Node');
+const Node = require('./lib/Node')
 
 module.exports = class LinkedList {
-  constructor(elements) {
-    this.length = 0;
-    this.first = null;
-    this.last = null;
-    this.addAll(elements || []);
+  constructor (elements) {
+    this.length = 0
+    this.first = null
+    this.last = null
+    this.addAll(elements || [])
   }
 
-  [Symbol.iterator]() {
-    let node = new Node(null, null, this.first);
+  [Symbol.iterator] () {
+    let node = new Node(null, null, this.first)
     return {
-      next() {
-        node = node.getNext();
-        const done = node === null;
+      next () {
+        node = node.getNext()
+        const done = node === null
         return {
           value: done ? null : node.getElement(),
           done
@@ -24,240 +24,240 @@ module.exports = class LinkedList {
     }
   }
 
-  shift() {
+  shift () {
     if (!this.first) {
-      throw new Error('No such element!');
+      throw new Error('No such element!')
     }
-    const element = this.first.getElement();
-    const next = this.first.getNext();
-    this.first = next;
+    const element = this.first.getElement()
+    const next = this.first.getNext()
+    this.first = next
     if (!next) {
-      this.last = null;
+      this.last = null
     } else {
-      next.setPrevious(null);
+      next.setPrevious(null)
     }
-    this.length--;
-    return element;
+    this.length--
+    return element
   }
 
-  pop() {
+  pop () {
     if (!this.last) {
-      throw new Error('No such element!');
+      throw new Error('No such element!')
     }
-    const element = this.last.getElement();
-    const previous = this.last.getPrevious();
-    this.last = previous;
+    const element = this.last.getElement()
+    const previous = this.last.getPrevious()
+    this.last = previous
     if (!previous) {
-      this.first = null;
+      this.first = null
     } else {
-      previous.setNext(null);
+      previous.setNext(null)
     }
-    this.length--;
-    return element;
+    this.length--
+    return element
   }
 
-  unshift(element) {
-    const newNode = new Node(null, element, this.first);
-    const first = this.first;
-    this.first = newNode;
+  unshift (element) {
+    const newNode = new Node(null, element, this.first)
+    const first = this.first
+    this.first = newNode
     if (!first) {
-      this.last = newNode;
+      this.last = newNode
     } else {
       this.first.setPrevious(newNode)
     }
-    this.length++;
+    this.length++
   }
 
-  push(element) {
-    const newNode = new Node(this.last, element, null);
-    const last = this.last;
-    this.last = newNode;
+  push (element) {
+    const newNode = new Node(this.last, element, null)
+    const last = this.last
+    this.last = newNode
     if (last == null) {
-      this.first = newNode;
+      this.first = newNode
     } else {
-      this.last.setNext(newNode);
+      this.last.setNext(newNode)
     }
-    this.length++;
+    this.length++
   }
 
-  add(index, element) {
-    let internalIndex = index;
-    let internalElement = element;
+  add (index, element) {
+    let internalIndex = index
+    let internalElement = element
     if (!element) {
-      internalIndex = this.length;
-      internalElement = index;
+      internalIndex = this.length
+      internalElement = index
     }
-    this._add(internalIndex, internalElement);
+    this._add(internalIndex, internalElement)
   }
 
-  addAll(index, elements) {
-    let internalIndex = index;
-    let internalElements = elements;
+  addAll (index, elements) {
+    let internalIndex = index
+    let internalElements = elements
     if (!elements) {
-      internalIndex = this.length;
-      internalElements = index;
+      internalIndex = this.length
+      internalElements = index
     }
-    this._addAll(internalIndex, internalElements);
+    this._addAll(internalIndex, internalElements)
   }
 
-  clear() {
-    this.first = null;
-    this.last = null;
-    this.length = 0;
+  clear () {
+    this.first = null
+    this.last = null
+    this.length = 0
   }
 
-  get(index) {
-    const node = this._getNode(index);
-    return node.getElement();
+  get (index) {
+    const node = this._getNode(index)
+    return node.getElement()
   }
 
-  set(index, element) {
-    const node = this._getNode(index);
-    const oldElement = node.getElement();
-    node.setElement(element);
-    return oldElement;
+  set (index, element) {
+    const node = this._getNode(index)
+    const oldElement = node.getElement()
+    node.setElement(element)
+    return oldElement
   }
 
-  remove(index) {
-    const node = this._getNode(index);
-    return this._remove(node);
+  remove (index) {
+    const node = this._getNode(index)
+    return this._remove(node)
   }
 
-  indexOf(element) {
-    let index = 0;
-    let node = this.first;
+  indexOf (element) {
+    let index = 0
+    let node = this.first
     while (node != null) {
-      if (node.getElement() == element) {
-        return index;
-      }
-      index++;
-      node = node.getNext();
-    }
-    return -1;
-  }
-
-  lastIndexOf(element) {
-    let index = this.length;
-    let node = this.last;
-    while (node != null) {
-      index--;
       if (node.getElement() === element) {
-        return index;
+        return index
       }
-      node = node.getPrevious();
+      index++
+      node = node.getNext()
     }
-    return -1;
+    return -1
   }
 
-  includes(element) {
-    return this.indexOf(element) !== -1;
+  lastIndexOf (element) {
+    let index = this.length
+    let node = this.last
+    while (node != null) {
+      index--
+      if (node.getElement() === element) {
+        return index
+      }
+      node = node.getPrevious()
+    }
+    return -1
   }
 
-  toString() {
-    return [...this].toString();
+  includes (element) {
+    return this.indexOf(element) !== -1
   }
 
-  _getNode(index) {
+  toString () {
+    return [...this].toString()
+  }
+
+  _getNode (index) {
     if (index < this.length / 2) {
-      let node = this.first;
-      let i = 0;
+      let node = this.first
+      let i = 0
       while (i < index) {
-        node = node.getNext();
-        i++;
+        node = node.getNext()
+        i++
       }
-      return node;
+      return node
     } else {
-      let node = this.last;
-      let i = this.length - 1;
+      let node = this.last
+      let i = this.length - 1
       while (i > index) {
-        node = node.getPrevious();
-        i--;
+        node = node.getPrevious()
+        i--
       }
-      return node;
+      return node
     }
   }
 
-  _remove(node) {
-    const element = node.getElement();
-    const next = node.getNext();
-    const previous = node.getPrevious();
+  _remove (node) {
+    const element = node.getElement()
+    const next = node.getNext()
+    const previous = node.getPrevious()
 
     if (!previous) {
-      this.first = next;
+      this.first = next
     } else {
-      previous.setNext(null);
-      node.setPrevious(null);
+      previous.setNext(null)
+      node.setPrevious(null)
     }
 
     if (!next) {
-      this.last = previous;
+      this.last = previous
     } else {
-      next.setPrevious(previous);
-      node.setNext(null);
+      next.setPrevious(previous)
+      node.setNext(null)
     }
 
-    this.length--;
-    return element;
+    this.length--
+    return element
   }
 
-  _add(index, element) {
+  _add (index, element) {
     if (index === this.length) {
-      this.push(element);
+      this.push(element)
     } else {
-      const node = this._getNode(index);
-      this._addBefore(element, node);
+      const node = this._getNode(index)
+      this._addBefore(element, node)
     }
   }
 
-  _addAll(index, elements) {
-    const elementCount = elements.length;
+  _addAll (index, elements) {
+    const elementCount = elements.length
     if (elementCount === 0) {
-      return;
+      return
     }
-    let previous = null;
-    let successor = null;
+    let previous = null
+    let successor = null
     if (index === this.length) {
-      previous = this.last;
+      previous = this.last
     } else {
-      successor = this._getNode(index);
-      previous = successor.getPrevious();
+      successor = this._getNode(index)
+      previous = successor.getPrevious()
     }
     previous = this._addNewNodes(elements, previous)
     if (!successor) {
-      this.last = previous;
+      this.last = previous
     } else {
-      previous.setNext(successor);
-      successor.setPrevious(previous);
+      previous.setNext(successor)
+      successor.setPrevious(previous)
     }
-    this.length += elementCount;
+    this.length += elementCount
   }
 
-  _addNewNodes(elements, previous) {
+  _addNewNodes (elements, previous) {
     for (const element of elements) {
-      previous = this._addNewNode(element, previous);
+      previous = this._addNewNode(element, previous)
     }
-    return previous;
+    return previous
   }
 
-  _addNewNode(element, previous) {
-    const newNode = new Node(previous, element, null);
+  _addNewNode (element, previous) {
+    const newNode = new Node(previous, element, null)
     if (!previous) {
-      this.first = newNode;
+      this.first = newNode
     } else {
-      previous.setNext(newNode);
+      previous.setNext(newNode)
     }
-    return newNode;
+    return newNode
   }
 
-  _addBefore(element, next) {
-    const previous = next.getPrevious();
-    const newNode = new Node(previous, element, next);
-    next.setPrevious(newNode);
+  _addBefore (element, next) {
+    const previous = next.getPrevious()
+    const newNode = new Node(previous, element, next)
+    next.setPrevious(newNode)
     if (!previous) {
-      this.first = newNode;
+      this.first = newNode
     } else {
-      previous.setNext(newNode);
+      previous.setNext(newNode)
     }
-    this.length++;
+    this.length++
   }
 }
